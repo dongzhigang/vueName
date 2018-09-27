@@ -5,62 +5,50 @@
         background-color="#304156"
         text-color="rgb(191, 203, 217)"
         active-text-color="#409eff"
-        @open="handleOpen"
-        @close="handleClose"
-        :collapse="Collapse">
-        <el-menu-item index='1' >
-          <i class="el-icon-menu"></i>
-          <span>首页</span>
+        :collapse="$store.state.app.hasSwitch">
+        <el-menu-item index='1' @click="handRouter" >
+            <i class="el-icon-ump-yemian"></i>
+            <span>首页</span>
         </el-menu-item>
-        <el-submenu index='2' v-for="item in array" v-bind:key="item.index">
+        <el-submenu :index='item.index' v-for="(item,key) in this.$store.state.app.switchRouter" v-bind:key="item.index">
           <template slot='title'>
             <i class="el-icon-menu"></i>
-            <span>{{item.name}}</span>
+            <span>{{item.title}}</span>
           </template>
-          <el-menu-item class="app-menu-item" index='2-1' v-for="col in item.children" v-bind:key="col.index">
-            <router-link :to="col.path" class="app-a">
-              <div class="app-item-text">{{col.title}}</div>
-            </router-link>
-          </el-menu-item>
+          <router-link :to="col.path" class="app-a" v-for="col in item.children" v-bind:key="col.index">
+            <el-menu-item :index="col.index">{{col.meta.title}}</el-menu-item>
+          </router-link>
         </el-submenu>
       </el-menu>
 	</div>
 </template>
 <script>
-	import Bus from '@/assets/bus.js'
 	export default {
 		name: 'SwitchView',
 		data () {
       return {
-        array: [
-          {
-            name: '用户管理',
-            children: [
-              {
-                path: '/user',
-                title: '会员管理'
-              }
-            ]
-          }
-        ],
-        Collapse: true
+        
       }
-    },
-    mounted: function () {
-      var vm = this
-      // 用$on事件来接收参数
-      Bus.$on('val', (data) => {
-        console.log(data)
-        vm.Collapse = data
-      })
     },
     methods: {
-      handleOpen (key, keyPath) {
-        console.log(key, keyPath)
-      },
-      handleClose (key, keyPath) {
-        console.log(key, keyPath)
+      // handleOpen (key, keyPath) {
+      //   console.log(key, keyPath)
+      // },
+      // handleClose (key, keyPath) {
+      //   console.log(key, keyPath)
+      // },
+      // handleSelect (key, keyPath){
+      //   console.log(key, keyPath)
+      // },
+      handRouter (){
+        this.$router.push('/')
       }
+    },
+    /**
+     * 生命周期
+     */
+    mounted: function () {
+      console.log(this.$store.state.app.switchRouter)
     },
 	}
 </script>

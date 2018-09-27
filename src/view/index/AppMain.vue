@@ -1,11 +1,50 @@
 <template>
-	<transition name="fade" mode="out-in">
+	<transition :name="transitionName">
 		<router-view></router-view>
 	</transition>
 </template>
 <script>
 	export default {
 		name: 'AppMain',
+		data (){
+			return {
+				transitionName: 'slide-left' 
+			}
+		},
+		watch: {    
+	      '$route' (to, from) {      
+	        if(to.path == '/'){        
+	          this.transitionName = 'slide-right';      
+	        }else{        
+	          this.transitionName = 'slide-left';      
+	        }    
+	      }  
+	    },
 	}
 </script>
-<style scoped></style>
+<style scoped>
+.slide-right-enter-active,
+.slide-right-leave-active,
+.slide-left-enter-active,
+.slide-left-leave-active {
+  will-change: transform;
+  transition: all 500ms;
+  position: absolute;
+}
+.slide-right-enter {
+  opacity: 0;
+  transform: translate3d(-100%, 0, 0);
+}
+.slide-right-leave-active {
+  opacity: 0;
+  transform: translate3d(100%, 0, 0);
+}
+.slide-left-enter {
+  opacity: 0;
+  transform: translate3d(100%, 0, 0);
+}
+.slide-left-leave-active {
+  opacity: 0;
+  transform: translate3d(-100%, 0, 0);
+}
+</style>

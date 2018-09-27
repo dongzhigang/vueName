@@ -1,17 +1,17 @@
 <template>
 	<div class="navbar">
 		<!-- 侧栏切换 -->
-		<el-radio-group v-model="isChilMsg" style="margin-bottom: 20px;margin:0; display: inline-block;" @change="emitToCollapse">
-			<el-radio-button :label="false" v-if='!label'><i class="el-icon-ump-daohang icon-daohang"></i></el-radio-button>
-			<el-radio-button :label="true"  v-if='label'><i class="el-icon-ump-daohang icon-daohang"></i></el-radio-button>
+		<el-radio-group v-model="$store.state.app.hasSwitch" style="margin-bottom: 20px;margin:0; display: inline-block;" @change="$store.commit('SwitchView')">
+			<el-radio-button :label="false" v-if='!$store.getters.SwitchView'><i class="el-icon-ump-daohang icon-daohang"></i></el-radio-button>
+			<el-radio-button :label="true"  v-if='$store.getters.SwitchView'><i class="el-icon-ump-daohang icon-daohang"></i></el-radio-button>
 		</el-radio-group>
-
+		<!-- 导航标签 -->
 		<el-breadcrumb separator-class="el-icon-arrow-right" class="app-head-bread">
-		  <el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
+		  <el-breadcrumb-item :to="{ path: '/' }">主页</el-breadcrumb-item>
 		  <el-breadcrumb-item>活动管理</el-breadcrumb-item>
 		  <el-breadcrumb-item>活动列表</el-breadcrumb-item>
-		  <el-breadcrumb-item>活动详情</el-breadcrumb-item>
 		</el-breadcrumb>
+		<!-- 用户导航 -->
 		<div class="app-head-right">
 			<i class="el-icon-ump-quanping app-head-iconrank"></i>
 			<img :src="user" class="app-head-img">
@@ -30,25 +30,15 @@
 </template>
 
 <script >
-	import user from '@/assets/logo.png'
-	import Bus from '@/assets/bus.js'
+	import user from '@/assets/userLogo.gif'
 	export default {
 		name:'Navbar',
 		data () {
 			return {
-				isChilMsg:true,
 				user:user
 			}
 		},
-		computed: {
-			label () {
-				return !this.isChilMsg
-			}
-		},
 		methods: {
-			emitToCollapse () {
-				Bus.$emit('val', this.isChilMsg)
-			}
 		}
 	}
 </script>
@@ -81,6 +71,7 @@
 		width: 40px;
 		height: 40px;
 		margin-left: 20px;
+		border-radius: 10px;
 	}
 	.app-head-down{
 		margin-left: 10px;
