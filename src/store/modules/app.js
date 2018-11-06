@@ -3,6 +3,8 @@ const app = {
 	state: {
 		hasSwitch:false,
 		switchRouter:asyncRouterMap,
+		editorContent:'',											//富文本内容
+		editorContentPath:[],										//富文本图片路径
 	},
 	mutations: {
 		SwitchView (state){
@@ -12,7 +14,7 @@ const app = {
 	getters: {
 		SwitchView (state){
 			return !state.hasSwitch
-		}
+		},
 	}
 }
 export default app

@@ -7,7 +7,8 @@
 		  	</div>
 		  	<div class="dash-rt">
 		  		<span class="dash-rt-title">用户数量</span>
-		  		<span class="dash-rt-num">3</span>
+		  		<!-- <span class="dash-rt-num">{{home.userCount}}</span> -->
+		  		<count-to class="card-panel-num" :startVal="0" :endVal="home.userCount" :duration="3600"></count-to>
 		  	</div>
 		  </el-col>
 		 <el-col :md="12" :lg="6"  class="dash-col">
@@ -15,8 +16,9 @@
 		  		<i class="el-icon-ump-gouwuche icon-blue bg-purple"></i>
 		  	</div>
 		  	<div class="dash-rt">
-		  		<span class="dash-rt-title">商品数量</span>
-		  		<span class="dash-rt-num">3</span>
+		  		<span class="dash-rt-title">购物数量</span>
+		  		<!-- <span class="dash-rt-num">{{home.CarCount}}</span> -->
+		  		<count-to class="card-panel-num" :startVal="0" :endVal="home.CarCount" :duration="3600"></count-to>
 		  	</div>
 		  </el-col>
 		  <el-col :md="12" :lg="6"  class="dash-col">
@@ -24,8 +26,8 @@
 		  		<i class="el-icon-ump-huopinshuliang icon-red bg-purple"></i>
 		  	</div>
 		  	<div class="dash-rt">
-		  		<span class="dash-rt-title">货品数量</span>
-		  		<span class="dash-rt-num">3</span>
+		  		<span class="dash-rt-title">商品数量</span>
+		  		<count-to class="card-panel-num" :startVal="0" :endVal="home.goodsCount" :duration="3600"></count-to>
 		  	</div>
 		  </el-col>
 		  <el-col :md="12" :lg="6"  class="dash-col">
@@ -34,15 +36,50 @@
 		  	</div>
 		  	<div class="dash-rt">
 		  		<span class="dash-rt-title">订单数量</span>
-		  		<span class="dash-rt-num">3</span>
+		  	<!-- 	<span class="dash-rt-num">{{home.OrderCount}}</span> -->
+		  		<count-to class="card-panel-num" :startVal="0" :endVal="home.OrderCount" :duration="3600"></count-to>
 		  	</div>
 		  </el-col>
 		</el-row>
 	</div>
 </template>
 <script>
+	import {homeData} from '@/api/home'
+	import CountTo from 'vue-count-to'
 	export default {
-		name:'Dashboard'
+		components: {
+			CountTo
+		},
+		name:'Dashboard',
+		data(){
+			return {
+				home:{
+					CarCount:0,
+					OrderCount:0,
+					goodsCount:0,
+					userCount:0
+				}
+			}
+		},
+		methods: {
+			homeData() {
+				homeData().then(function(res){
+					console.log(res)
+					if(res.data.code == 0){
+						this.home = res.data.data
+						console.log(this.home)
+					}
+				}.bind(this))
+			}
+		},
+		/**
+	     * 生命周期
+	     * @return {[type]} [description]
+	     */
+	    mounted() {
+	      //查询数据
+	    	this.homeData();
+	    }
 	}
 </script>
 <style scoped>

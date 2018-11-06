@@ -1,8 +1,8 @@
 <template>
-  <div class="app-wrapper">
+  <div class="app-wrapper ">
     <el-container style="height: 100%;">
       <SwitchView></SwitchView>
-      <el-container>
+      <el-container class="main-containe" style="height: 100%;">
         <el-header class='app-head'>
           <navbar></navbar>
         </el-header>
